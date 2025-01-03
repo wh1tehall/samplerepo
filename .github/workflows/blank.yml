@@ -2,30 +2,22 @@
 
 name: CI
 
-# Controls when the workflow will run
 on:
   pull_request_target:
     branches: [ "main" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name:  Run a multi-line script
         run: |
-          echo $(git log -3 | grep commit)
-          echo "${{ github.event.pull_request.number }}"
-          echo "${{ github.event.pull_request.head.sha }}"
-          echo Terrible secret ${{ secrets.Example }}
+          COMMIT=${{ github.event.pull_request.head.sha }}
+          echo $COMMIT
