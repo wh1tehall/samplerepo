@@ -29,4 +29,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo $(git log -3 | grep commit)
+          echo "${{ github.event.pull_request.number }}"
+          echo "${{ github.event.pull_request.merge_commit_sha }}"
           echo Terrible secret ${{ secrets.Example }}
